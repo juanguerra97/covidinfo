@@ -14,7 +14,11 @@ namespace CovidInfoWebService.Models
 
         public int CasoCovidId { get; set; }
 
-        public Localizacion Localizacion { get; set; }
+        public string Pais { get; set; }
+
+        public string Departamento { get; set; }
+
+        public string Municipio { get; set; }
 
         public string PrimerNombre { get; set; }
 

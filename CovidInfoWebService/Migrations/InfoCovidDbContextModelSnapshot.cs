@@ -22,14 +22,26 @@ namespace CovidInfoWebService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Departamento")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(128);
+
                     b.Property<byte>("Edad")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("LocalizacionId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Municipio")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Pais")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(128);
 
                     b.Property<string>("PrimerApellido")
                         .IsRequired()
@@ -56,42 +68,7 @@ namespace CovidInfoWebService.Migrations
 
                     b.HasKey("CasoCovidId");
 
-                    b.HasIndex("LocalizacionId");
-
                     b.ToTable("CasosCovid");
-                });
-
-            modelBuilder.Entity("CovidInfoWebService.Models.Localizacion", b =>
-                {
-                    b.Property<int>("LocalizacionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Departamento")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Municipio")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Pais")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(128);
-
-                    b.HasKey("LocalizacionId");
-
-                    b.ToTable("Localizacion");
-                });
-
-            modelBuilder.Entity("CovidInfoWebService.Models.CasoCovid", b =>
-                {
-                    b.HasOne("CovidInfoWebService.Models.Localizacion", "Localizacion")
-                        .WithMany()
-                        .HasForeignKey("LocalizacionId");
                 });
 #pragma warning restore 612, 618
         }
