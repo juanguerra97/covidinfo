@@ -48,6 +48,11 @@ namespace CovidInfoWebService
             
             app.UseAuthorization();
 
+            app.UseStatusCodePages(
+                "text/plain",
+                "Ocurrio un error HTTP {0} ;)"
+            );
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
