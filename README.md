@@ -27,3 +27,9 @@ dotnet run
 Ejemplo de petici&oacute;n POST
 
 <img src="https://raw.githubusercontent.com/juanguerra97/covidinfo/master/docs/capturas/ejemplo-post.png" alt="Ejemplo POST">
+
+Ejemplos de consultas
+
+<img src="https://raw.githubusercontent.com/juanguerra97/covidinfo/master/docs/capturas/ejemplo-get-01.png" alt="Ejemplo GET">
+
+<img src="https://raw.githubusercontent.com/juanguerra97/covidinfo/master/docs/capturas/ejemplo-get-02.png" alt="Ejemplo GET">
