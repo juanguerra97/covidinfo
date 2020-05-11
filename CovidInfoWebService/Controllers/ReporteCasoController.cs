@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CovidInfoWebService.DataAccess;
 using CovidInfoWebService.Models;
+using CovidInfoWebService.Utils;
 
 namespace CovidInfoWebService.Controllers
 {
@@ -23,9 +24,29 @@ namespace CovidInfoWebService.Controllers
 
         // GET: api/ReporteCaso
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CasoCovid>>> GetCasosCovid()
+        public async Task<ActionResult<IEnumerable<CasoCovid>>> GetCasosCovid([FromQuery] string pais, 
+            [FromQuery] string departamento, 
+            [FromQuery] string municipio,
+            [FromQuery] byte? edad,
+            [FromQuery] char? sexo,
+            [FromQuery] DateTime? fecha)
         {
-            return await _context.CasosCovid.ToListAsync();
+
+            var casos = _context.CasosCovid.AsQueryable()
+                .FiltrarPorPais(pais)
+                .FiltrarPorDepartamento(departamento)
+                .FiltrarPorMunicipio(municipio)
+                .FiltrarPorEdad(edad)
+                .FiltrarPorSexo(sexo)
+                .FiltrarPorFecha(fecha).AsEnumerable();
+            
+
+            return Ok(new
+            { 
+                total = casos.Count(),
+                registros = casos,
+                filtro = new { pais, departamento, municipio, edad, sexo, fecha },
+            });
         }
 
         // GET: api/ReporteCaso/5
