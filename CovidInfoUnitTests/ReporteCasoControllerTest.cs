@@ -275,8 +275,11 @@ namespace CovidInfoUnitTests
 
             var context = new InfoCovidDbContext(options);
 
-            context.AddRange(CasosCovidData.GetFakeCasos());
-            context.SaveChanges();
+            if (context.CasosCovid.Count() == 0)
+            {
+                context.AddRange(CasosCovidData.GetFakeCasos());
+                context.SaveChanges();
+            }
 
             return context;
 
