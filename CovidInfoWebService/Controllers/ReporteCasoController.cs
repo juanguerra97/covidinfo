@@ -24,12 +24,12 @@ namespace CovidInfoWebService.Controllers
 
         // GET: api/ReporteCaso
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CasoCovid>>> GetCasosCovid([FromQuery] string pais, 
-            [FromQuery] string departamento, 
-            [FromQuery] string municipio,
-            [FromQuery] byte? edad,
-            [FromQuery] char? sexo,
-            [FromQuery] DateTime? fecha)
+        public async Task<ActionResult<IEnumerable<CasoCovid>>> GetCasosCovid([FromQuery] string pais = null, 
+            [FromQuery] string departamento = null, 
+            [FromQuery] string municipio = null,
+            [FromQuery] byte? edad = null,
+            [FromQuery] char? sexo = null,
+            [FromQuery] DateTime? fecha = null)
         {
 
             var casos = _context.CasosCovid.AsQueryable()
