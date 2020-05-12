@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CovidInfoWebService.DataAccess;
 using CovidInfoWebService.Models;
 using CovidInfoWebService.Utils;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CovidInfoWebService.Controllers
 {
@@ -24,7 +25,7 @@ namespace CovidInfoWebService.Controllers
 
         // GET: api/ReporteCaso
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CasoCovid>>> GetCasosCovid([FromQuery] string pais = null, 
+        public async Task<OkObjectResult> GetCasosCovid([FromQuery] string pais = null, 
             [FromQuery] string departamento = null, 
             [FromQuery] string municipio = null,
             [FromQuery] byte? edad = null,
@@ -41,11 +42,11 @@ namespace CovidInfoWebService.Controllers
                 .FiltrarPorFecha(fecha).AsEnumerable();
             
 
-            return Ok(new
+            return Ok(new GetCasosCovidOkObjectResult
             { 
-                total = casos.Count(),
-                registros = casos,
-                filtro = new { pais, departamento, municipio, edad, sexo, fecha },
+                Total = casos.Count(),
+                Registros = casos,
+                Filtro = new Filtro(pais, departamento, municipio, edad, sexo, fecha)
             });
         }
 
@@ -121,11 +122,49 @@ namespace CovidInfoWebService.Controllers
         //    await _context.SaveChangesAsync();
 
         //    return casoCovid;
-        //}
+        //}        
 
         private bool CasoCovidExists(int id)
         {
             return _context.CasosCovid.Any(e => e.CasoCovidId == id);
         }
     }
+
+    public class GetCasosCovidOkObjectResult
+    {
+
+        public int Total { get; set; }
+
+        public IEnumerable<CasoCovid> Registros { get; set; }
+
+        public Filtro Filtro { get; set; }
+
+    }
+
+    public class Filtro
+    {
+        public string Pais { get; set; }
+        public string Departamento { get; set; }
+        public string Municipio { get; set; }
+        public byte? Edad { get; set; }
+        public char? Sexo { get; set; }
+        public DateTime? Fecha { get; set; }
+
+        public Filtro(string pais = null,
+            string departamento = null,
+            string municipio = null,
+            byte? edad = null,
+            char? sexo = null,
+            DateTime? fecha = null)
+        {
+            Pais = pais;
+            Departamento = departamento;
+            Municipio = municipio;
+            Edad = edad;
+            Sexo = sexo;
+            Fecha = fecha;
+        }
+
+    }
+
 }
