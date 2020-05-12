@@ -1,7 +1,6 @@
 using CovidInfoWebService.Models;
 using CovidInfoWebService.Utils;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -10,8 +9,11 @@ namespace CovidInfoUnitTests
     public class FiltrosTest
     {
 
-        private IQueryable<CasoCovid> CasosCovid { get; } = GetData();
+        private IQueryable<CasoCovid> CasosCovid { get; } = CasosCovidData.GetFakeCasos().AsQueryable();
 
+        /// <summary>
+        /// Test para probar que el funcionamiento del método FiltrarPorPais sea correcto
+        /// </summary>
         [Fact]
         public void FiltroPorPais()
         {
@@ -30,6 +32,9 @@ namespace CovidInfoUnitTests
 
         }
 
+        /// <summary>
+        /// Test para probar que el funcionamiento del método FiltrarPorDepartamento sea correcto
+        /// </summary>
         [Fact]
         public void FiltroPorDepartamento()
         {
@@ -48,6 +53,9 @@ namespace CovidInfoUnitTests
 
         }
 
+        /// <summary>
+        /// Test para probar que el funcionamiento del método FiltrarPorMunicipio sea correcto
+        /// </summary>
         [Fact]
         public void FiltroPorMunicipio()
         {
@@ -73,6 +81,9 @@ namespace CovidInfoUnitTests
 
         }
 
+        /// <summary>
+        /// Test para probar que el funcionamiento del método FiltrarPorEdad sea correcto
+        /// </summary>
         [Fact]
         public void FiltroPorEdad()
         {
@@ -97,16 +108,22 @@ namespace CovidInfoUnitTests
 
         }
 
+        /// <summary>
+        /// Test para probar que el funcionamiento del método FiltrarPorSexo sea correcto
+        /// </summary>
         [Fact]
         public void FiltroPorSexo()
         {
 
-            Assert.Equal(6, CasosCovid.FiltrarPorSexo('M').Count());
+            Assert.Equal(7, CasosCovid.FiltrarPorSexo('M').Count());
 
-            Assert.Equal(3, CasosCovid.FiltrarPorSexo('F').Count());
+            Assert.Equal(5, CasosCovid.FiltrarPorSexo('F').Count());
 
         }
 
+        /// <summary>
+        /// Test para probar que el funcionamiento del método FiltrarPorFecha sea correcto
+        /// </summary>
         [Fact]
         public void FiltroPorFecha()
         {
@@ -117,7 +134,7 @@ namespace CovidInfoUnitTests
 
             Assert.Equal(3, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 17)).Count());
 
-            Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 18)).Count());
+            Assert.Equal(3, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 18)).Count());
 
             Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 19)).Count());
 
@@ -128,118 +145,6 @@ namespace CovidInfoUnitTests
             Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 30)).Count());
 
 
-        }
-
-        private static IQueryable<CasoCovid> GetData()
-        {
-            var casos = new List<CasoCovid>();
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Guatemala",
-                Municipio = "Villa Nueva",
-                Edad = 20,
-                Sexo = 'M',
-                Fecha = new DateTime(2020, 03, 14)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Guatemala",
-                Municipio = "Villa Nueva",
-                Edad = 27,
-                Sexo = 'M',
-                Fecha = new DateTime(2020, 03, 17)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Guatemala",
-                Municipio = "Guatemala",
-                Edad = 24,
-                Sexo = 'M',
-                Fecha = new DateTime(2020, 03, 17)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Guatemala",
-                Municipio = "Guatemala",
-                Edad = 45,
-                Sexo = 'F',
-                Fecha = new DateTime(2020, 03, 18)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "San Marcos",
-                Municipio = "San Pedro",
-                Edad = 24,
-                Sexo = 'M',
-                Fecha = new DateTime(2020, 03, 17)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Zacapa",
-                Municipio = "Zacapa",
-                Edad = 62,
-                Sexo = 'F',
-                Fecha = new DateTime(2020, 03, 19)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Zacapa",
-                Municipio = "Estanzuela",
-                Edad = 31,
-                Sexo = 'M',
-                Fecha = new DateTime(2020, 03, 21)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Quetzaltenango",
-                Municipio = "Olintepeque",
-                Edad = 42,
-                Sexo = 'M',
-                Fecha = new DateTime(2020, 03, 28)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Guatemala",
-                Departamento = "Quetzaltenango",
-                Municipio = "Quetzaltenango",
-                Edad = 23,
-                Sexo = 'F',
-                Fecha = new DateTime(2020, 03, 30)
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Honduras",
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "Honduras",
-            });
-
-            casos.Add(new CasoCovid
-            {
-                Pais = "México",
-            });
-
-            return casos.AsQueryable();
         }
 
     }
