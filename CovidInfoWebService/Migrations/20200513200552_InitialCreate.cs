@@ -17,9 +17,9 @@ namespace CovidInfoWebService.Migrations
                     Departamento = table.Column<string>(maxLength: 128, nullable: false),
                     Municipio = table.Column<string>(maxLength: 128, nullable: false),
                     PrimerNombre = table.Column<string>(maxLength: 64, nullable: false),
-                    SegundoNombre = table.Column<string>(maxLength: 64, nullable: false),
+                    SegundoNombre = table.Column<string>(maxLength: 64, nullable: true),
                     PrimerApellido = table.Column<string>(maxLength: 64, nullable: false),
-                    SegundoApellido = table.Column<string>(maxLength: 64, nullable: false),
+                    SegundoApellido = table.Column<string>(maxLength: 64, nullable: true),
                     Edad = table.Column<byte>(nullable: false),
                     Sexo = table.Column<char>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false)

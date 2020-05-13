@@ -32,9 +32,9 @@ namespace CovidInfoWebService.DataAccess
                 caso.Property(c => c.Departamento).IsRequired().HasMaxLength(128);
                 caso.Property(c => c.Municipio).IsRequired().HasMaxLength(128);
                 caso.Property(c => c.PrimerNombre).IsRequired().HasMaxLength(64);
-                caso.Property(c => c.SegundoNombre).IsRequired().HasMaxLength(64);
+                caso.Property(c => c.SegundoNombre).HasMaxLength(64);
                 caso.Property(c => c.PrimerApellido).IsRequired().HasMaxLength(64);
-                caso.Property(c => c.SegundoApellido).IsRequired().HasMaxLength(64);
+                caso.Property(c => c.SegundoApellido).HasMaxLength(64);
                 caso.Property(c => c.Edad).IsRequired();
                 caso.Property(c => c.Sexo).IsRequired();
                 caso.Property(c => c.Fecha).IsRequired();

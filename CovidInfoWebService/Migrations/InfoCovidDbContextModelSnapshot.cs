@@ -18,7 +18,7 @@ namespace CovidInfoWebService.Migrations
 
             modelBuilder.Entity("CovidInfoWebService.Models.CasoCovid", b =>
                 {
-                    b.Property<int>("CasoCovidId")
+                    b.Property<int?>("CasoCovidId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -54,12 +54,10 @@ namespace CovidInfoWebService.Migrations
                         .HasMaxLength(64);
 
                     b.Property<string>("SegundoApellido")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(64);
 
                     b.Property<string>("SegundoNombre")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(64);
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CovidInfoWebService.Migrations
 {
     [DbContext(typeof(InfoCovidDbContext))]
-    [Migration("20200510202323_InitialCreate")]
+    [Migration("20200513200552_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace CovidInfoWebService.Migrations
 
             modelBuilder.Entity("CovidInfoWebService.Models.CasoCovid", b =>
                 {
-                    b.Property<int>("CasoCovidId")
+                    b.Property<int?>("CasoCovidId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -56,12 +56,10 @@ namespace CovidInfoWebService.Migrations
                         .HasMaxLength(64);
 
                     b.Property<string>("SegundoApellido")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(64);
 
                     b.Property<string>("SegundoNombre")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(64);
 

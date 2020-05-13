@@ -102,6 +102,7 @@ namespace CovidInfoWebService.Controllers
         [HttpPost]
         public async Task<ActionResult<CasoCovid>> PostCasoCovid(CasoCovid casoCovid)
         {
+            casoCovid.CasoCovidId = null;
             _context.CasosCovid.Add(casoCovid);
             await _context.SaveChangesAsync();
 

@@ -13,7 +13,7 @@ namespace CovidInfoWebService.Models
     public class CasoCovid
     {
 
-        public int CasoCovidId { get; set; }
+        public int? CasoCovidId { get; set; }
 
         [Required(ErrorMessage = "Falta el pais")]
         [MaxLength(128, ErrorMessage = "La longitud maxima de {0} es {1}")]
@@ -31,7 +31,6 @@ namespace CovidInfoWebService.Models
         [MaxLength(64, ErrorMessage = "La longitud maxima de {0} es {1}")]
         public string PrimerNombre { get; set; }
 
-        [Required(ErrorMessage = "Falta el segundo nombre")]
         [MaxLength(64, ErrorMessage = "La longitud maxima de {0} es {1}")]
         public string SegundoNombre { get; set; }
 
@@ -39,7 +38,6 @@ namespace CovidInfoWebService.Models
         [MaxLength(64, ErrorMessage = "La longitud maxima de {0} es {1}")]
         public string PrimerApellido { get; set; }
 
-        [Required(ErrorMessage = "Falta el segundo apellido")]
         [MaxLength(64, ErrorMessage = "La longitud maxima de {0} es {1}")]
         public string SegundoApellido { get; set; }
 
