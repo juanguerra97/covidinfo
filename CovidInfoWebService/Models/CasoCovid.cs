@@ -45,6 +45,7 @@ namespace CovidInfoWebService.Models
         [Range(1, 120, ErrorMessage = "La edad debe estar entre {1} y {2}")]
         public byte Edad { get; set; }
 
+        [Sexo(ErrorMessage = "El sexo debe ser M (Masculino) o F (Femenino)")]
         [Required(ErrorMessage = "Falta el sexo")]
         public char Sexo { get; set; }
 
@@ -53,5 +54,17 @@ namespace CovidInfoWebService.Models
 
 
     }
+
+    public class SexoAttribute : ValidationAttribute
+    {
+
+        public override bool IsValid(object value)
+        {
+            var valorSexo = (char)value;
+
+            return valorSexo == 'M' || valorSexo == 'F';
+        }
+    }
+
 
 }
