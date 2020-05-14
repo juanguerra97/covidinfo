@@ -1,6 +1,8 @@
 using CovidInfoWebService.Models;
 using CovidInfoWebService.Utils;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -14,138 +16,101 @@ namespace CovidInfoUnitTests
         /// <summary>
         /// Test para probar que el funcionamiento del método FiltrarPorPais sea correcto
         /// </summary>
-        [Fact]
-        public void FiltroPorPais()
+        [Theory]
+        [InlineData(0, "Australia")]
+        [InlineData(9, "Guatemala")]
+        [InlineData(2, "Honduras")]
+        [InlineData(1, "México")]
+        [InlineData(0, "guatemala")]
+        public void FiltroPorPais(int totalExpected, string pais)
         {
 
-            Assert.Equal(0, CasosCovid.FiltrarPorPais("Australia").Count());
-
-            Assert.Equal(9, CasosCovid.FiltrarPorPais("Guatemala").Count());
-
-            Assert.Equal(2, CasosCovid.FiltrarPorPais("Honduras").Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorPais("México").Count());
-
-            Assert.Equal(0, CasosCovid.FiltrarPorPais("guatemala").Count());
-
-            Assert.Equal(0, CasosCovid.FiltrarPorPais("Mexico").Count());
+            Assert.Equal(totalExpected, CasosCovid.FiltrarPorPais(pais).Count());
 
         }
 
         /// <summary>
         /// Test para probar que el funcionamiento del método FiltrarPorDepartamento sea correcto
         /// </summary>
-        [Fact]
-        public void FiltroPorDepartamento()
+        [Theory]
+        [InlineData(0, "Petén")]
+        [InlineData(4, "Guatemala")]
+        [InlineData(1, "San Marcos")]
+        [InlineData(2, "Zacapa")]
+        [InlineData(2, "Quetzaltenango")]
+        [InlineData(0, "quetzaltenango")]
+        public void FiltroPorDepartamento(int totalExpected, string departamento)
         {
 
-            Assert.Equal(0, CasosCovid.FiltrarPorDepartamento("Petén").Count());
-
-            Assert.Equal(4, CasosCovid.FiltrarPorDepartamento("Guatemala").Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorDepartamento("San Marcos").Count());
-
-            Assert.Equal(2, CasosCovid.FiltrarPorDepartamento("Zacapa").Count());
-
-            Assert.Equal(2, CasosCovid.FiltrarPorDepartamento("Quetzaltenango").Count());
-
-            Assert.Equal(0, CasosCovid.FiltrarPorDepartamento("quetzaltenango").Count());
+            Assert.Equal(totalExpected, CasosCovid.FiltrarPorDepartamento(departamento).Count());
 
         }
 
         /// <summary>
         /// Test para probar que el funcionamiento del método FiltrarPorMunicipio sea correcto
         /// </summary>
-        [Fact]
-        public void FiltroPorMunicipio()
+        [Theory]
+        [InlineData(0, "Tangamandapio")]
+        [InlineData(2, "Villa Nueva")]
+        [InlineData(2, "Guatemala")]
+        [InlineData(1, "Olintepeque")]
+        [InlineData(1, "San Pedro")]
+        [InlineData(1, "Estanzuela")]
+        [InlineData(1, "Zacapa")]
+        [InlineData(1, "Quetzaltenango")]
+        [InlineData(0, "quetzaltenango")]
+        public void FiltroPorMunicipio(int totalExpected, string municipio)
         {
 
-            Assert.Equal(0, CasosCovid.FiltrarPorMunicipio("Tangamandapio").Count());
-
-            Assert.Equal(2, CasosCovid.FiltrarPorMunicipio("Villa Nueva").Count());
-
-            Assert.Equal(2, CasosCovid.FiltrarPorMunicipio("Guatemala").Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorMunicipio("Olintepeque").Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorMunicipio("San Pedro").Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorMunicipio("Zacapa").Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorMunicipio("Estanzuela").Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorMunicipio("Quetzaltenango").Count());
-
-            Assert.Equal(0, CasosCovid.FiltrarPorMunicipio("quetzaltenango").Count());
-
+            Assert.Equal(totalExpected, CasosCovid.FiltrarPorMunicipio(municipio).Count());
 
         }
 
         /// <summary>
         /// Test para probar que el funcionamiento del método FiltrarPorEdad sea correcto
         /// </summary>
-        [Fact]
-        public void FiltroPorEdad()
+        [Theory]
+        [InlineData(0, 100)]
+        [InlineData(2, 24)]
+        [InlineData(1, 20)]
+        [InlineData(1, 27)]
+        [InlineData(1, 45)]
+        [InlineData(1, 23)]
+        [InlineData(1, 42)]
+        [InlineData(1, 62)]
+        [InlineData(1, 31)]
+        public void FiltroPorEdad(int totalExpected, byte edad)
         {
 
-            Assert.Equal(0, CasosCovid.FiltrarPorEdad(100).Count());
-
-            Assert.Equal(2, CasosCovid.FiltrarPorEdad(24).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorEdad(20).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorEdad(27).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorEdad(45).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorEdad(23).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorEdad(42).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorEdad(62).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorEdad(31).Count());
+            Assert.Equal(totalExpected, CasosCovid.FiltrarPorEdad(edad).Count());
 
         }
 
         /// <summary>
         /// Test para probar que el funcionamiento del método FiltrarPorSexo sea correcto
         /// </summary>
-        [Fact]
-        public void FiltroPorSexo()
+        [Theory]
+        [InlineData(7, 'M')]
+        [InlineData(5, 'F')]
+        public void FiltroPorSexo(int totalExpected, char sexo)
         {
 
-            Assert.Equal(7, CasosCovid.FiltrarPorSexo('M').Count());
-
-            Assert.Equal(5, CasosCovid.FiltrarPorSexo('F').Count());
+            Assert.Equal(totalExpected, CasosCovid.FiltrarPorSexo(sexo).Count());
 
         }
 
         /// <summary>
         /// Test para probar que el funcionamiento del método FiltrarPorFecha sea correcto
         /// </summary>
-        [Fact]
-        public void FiltroPorFecha()
+        [Theory]
+        [ClassData(typeof(FiltrarPorFechaData))]
+        public void FiltroPorFecha(int totalExpected, DateTime fecha)
         {
 
-            Assert.Equal(0, CasosCovid.FiltrarPorFecha(new DateTime(2020, 01, 01)).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 14)).Count());
-
-            Assert.Equal(3, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 17)).Count());
-
-            Assert.Equal(3, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 18)).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 19)).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 21)).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 28)).Count());
-
-            Assert.Equal(1, CasosCovid.FiltrarPorFecha(new DateTime(2020, 03, 30)).Count());
-
+            Assert.Equal(totalExpected, CasosCovid.FiltrarPorFecha(fecha).Count());
 
         }
 
     }
+
 }

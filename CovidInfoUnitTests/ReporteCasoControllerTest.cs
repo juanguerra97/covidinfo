@@ -20,21 +20,17 @@ namespace CovidInfoUnitTests
         [Fact]
         public async void GetAllCasosCovid()
         {
-
             using(var context = GetDbContext())
             {
-
                 var controller = new ReporteCasoController(context);
 
                 Assert.Equal(12, context.CasosCovid.AsEnumerable().Count());
 
                 var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid()).Value;
 
-
                 Assert.NotNull(result);
 
                 Assert.Equal(12, result.Total);
-
                 Assert.Equal(12, result.Registros.Count());
 
                 Assert.Null(result.Filtro.Pais);
@@ -43,8 +39,6 @@ namespace CovidInfoUnitTests
                 Assert.Null(result.Filtro.Edad);
                 Assert.Null(result.Filtro.Sexo);
                 Assert.Null(result.Filtro.Fecha);
-
-
             }
 
         }
@@ -52,8 +46,13 @@ namespace CovidInfoUnitTests
         /// <summary>
         /// Se prueba que el metodo GetCasosCovid devuelva los registros correctos al filtrar por pais
         /// </summary>
-        [Fact]
-        public async void GetCasosCovidPorPais()
+        [Theory]
+        [InlineData(0, "Australia")]
+        [InlineData(9, "Guatemala")]
+        [InlineData(2, "Honduras")]
+        [InlineData(1, "México")]
+        [InlineData(0, "guatemala")]
+        public async void GetCasosCovidPorPais(int totalExpected, string pais)
         {
 
             using (var context = GetDbContext())
@@ -63,17 +62,16 @@ namespace CovidInfoUnitTests
 
                 Assert.Equal(12, context.CasosCovid.AsEnumerable().Count());
 
-                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(pais: "Guatemala")).Value;
+                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(pais: pais)).Value;
 
 
                 Assert.NotNull(result);
 
-                Assert.Equal(9, result.Total);
-
-                Assert.Equal(9, result.Registros.Count());
+                Assert.Equal(totalExpected, result.Total);
+                Assert.Equal(totalExpected, result.Registros.Count());
 
                 Assert.NotNull(result.Filtro.Pais);
-                Assert.Equal("Guatemala", result.Filtro.Pais);
+                Assert.Equal(pais, result.Filtro.Pais);
 
                 Assert.Null(result.Filtro.Departamento);
                 Assert.Null(result.Filtro.Municipio);
@@ -89,29 +87,33 @@ namespace CovidInfoUnitTests
         /// <summary>
         /// Se prueba que el metodo GetCasosCovid devuelva los registros correctos al filtrar por departamento
         /// </summary>
-        [Fact]
-        public async void GetCasosCovidPorDepartamento()
+        [Theory]
+        [InlineData(0, "Petén")]
+        [InlineData(4, "Guatemala")]
+        [InlineData(1, "San Marcos")]
+        [InlineData(2, "Zacapa")]
+        [InlineData(2, "Quetzaltenango")]
+        [InlineData(0, "quetzaltenango")]
+        public async void GetCasosCovidPorDepartamento(int totalExpected, string departamento)
         {
-
             using (var context = GetDbContext())
             {
-
                 var controller = new ReporteCasoController(context);
 
                 Assert.Equal(12, context.CasosCovid.AsEnumerable().Count());
 
-                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(departamento: "Guatemala")).Value;
-
+                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(departamento: departamento)).Value;
 
                 Assert.NotNull(result);
 
-                Assert.Equal(4, result.Total);
-
-                Assert.Equal(4, result.Registros.Count());
+                Assert.Equal(totalExpected, result.Total);
+                Assert.Equal(totalExpected, result.Registros.Count());
 
                 Assert.Null(result.Filtro.Pais);
+
                 Assert.NotNull(result.Filtro.Departamento);
-                Assert.Equal("Guatemala", result.Filtro.Departamento);
+                Assert.Equal(departamento, result.Filtro.Departamento);
+
                 Assert.Null(result.Filtro.Municipio);
                 Assert.Null(result.Filtro.Edad);
                 Assert.Null(result.Filtro.Sexo);
@@ -125,35 +127,40 @@ namespace CovidInfoUnitTests
         /// <summary>
         /// Se prueba que el metodo GetCasosCovid devuelva los registros correctos al filtrar por municipio
         /// </summary>
-        [Fact]
-        public async void GetCasosCovidPorMunicipio()
+        [Theory]
+        [InlineData(0, "Tangamandapio")]
+        [InlineData(2, "Villa Nueva")]
+        [InlineData(2, "Guatemala")]
+        [InlineData(1, "Olintepeque")]
+        [InlineData(1, "San Pedro")]
+        [InlineData(1, "Estanzuela")]
+        [InlineData(1, "Zacapa")]
+        [InlineData(1, "Quetzaltenango")]
+        [InlineData(0, "quetzaltenango")]
+        public async void GetCasosCovidPorMunicipio(int totalExpected, string municipio)
         {
-
             using (var context = GetDbContext())
             {
-
                 var controller = new ReporteCasoController(context);
 
                 Assert.Equal(12, context.CasosCovid.AsEnumerable().Count());
 
-                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(municipio: "Villa Nueva")).Value;
-
+                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(municipio: municipio)).Value;
 
                 Assert.NotNull(result);
 
-                Assert.Equal(2, result.Total);
-
-                Assert.Equal(2, result.Registros.Count());
+                Assert.Equal(totalExpected, result.Total);
+                Assert.Equal(totalExpected, result.Registros.Count());
 
                 Assert.Null(result.Filtro.Pais);
                 Assert.Null(result.Filtro.Departamento);
+
                 Assert.NotNull(result.Filtro.Municipio);
-                Assert.Equal("Villa Nueva", result.Filtro.Municipio);
+                Assert.Equal(municipio, result.Filtro.Municipio);
+
                 Assert.Null(result.Filtro.Edad);
                 Assert.Null(result.Filtro.Sexo);
                 Assert.Null(result.Filtro.Fecha);
-
-
             }
 
         }
@@ -161,35 +168,41 @@ namespace CovidInfoUnitTests
         /// <summary>
         /// Se prueba que el metodo GetCasosCovid devuelva los registros correctos al filtrar por edad
         /// </summary>
-        [Fact]
-        public async void GetCasosCovidPorEdad()
+        [Theory]
+        [InlineData(0, 100)]
+        [InlineData(2, 24)]
+        [InlineData(1, 20)]
+        [InlineData(1, 27)]
+        [InlineData(1, 45)]
+        [InlineData(1, 23)]
+        [InlineData(1, 42)]
+        [InlineData(1, 62)]
+        [InlineData(1, 31)]
+        public async void GetCasosCovidPorEdad(int totalExpected, byte edad)
         {
-
             using (var context = GetDbContext())
             {
-
                 var controller = new ReporteCasoController(context);
 
                 Assert.Equal(12, context.CasosCovid.AsEnumerable().Count());
 
-                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(edad: 24)).Value;
+                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(edad: edad)).Value;
 
 
                 Assert.NotNull(result);
 
-                Assert.Equal(2, result.Total);
-
-                Assert.Equal(2, result.Registros.Count());
+                Assert.Equal(totalExpected, result.Total);
+                Assert.Equal(totalExpected, result.Registros.Count());
 
                 Assert.Null(result.Filtro.Pais);
                 Assert.Null(result.Filtro.Departamento);
                 Assert.Null(result.Filtro.Municipio);
+
                 Assert.NotNull(result.Filtro.Edad);
-                Assert.Equal((byte)24, result.Filtro.Edad);
+                Assert.Equal(edad, result.Filtro.Edad);
+                
                 Assert.Null(result.Filtro.Sexo);
                 Assert.Null(result.Filtro.Fecha);
-
-
             }
 
         }
@@ -197,35 +210,33 @@ namespace CovidInfoUnitTests
         /// <summary>
         /// Se prueba que el metodo GetCasosCovid devuelva los registros correctos al filtrar por sexo
         /// </summary>
-        [Fact]
-        public async void GetCasosCovidPorSexo()
+        [Theory]
+        [InlineData(7, 'M')]
+        [InlineData(5, 'F')]
+        public async void GetCasosCovidPorSexo(int totalExpected, char sexo)
         {
-
             using (var context = GetDbContext())
             {
-
                 var controller = new ReporteCasoController(context);
 
                 Assert.Equal(12, context.CasosCovid.AsEnumerable().Count());
 
-                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(sexo: 'M')).Value;
-
+                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(sexo: sexo)).Value;
 
                 Assert.NotNull(result);
 
-                Assert.Equal(7, result.Total);
-
-                Assert.Equal(7, result.Registros.Count());
+                Assert.Equal(totalExpected, result.Total);
+                Assert.Equal(totalExpected, result.Registros.Count());
 
                 Assert.Null(result.Filtro.Pais);
                 Assert.Null(result.Filtro.Departamento);
                 Assert.Null(result.Filtro.Municipio);
                 Assert.Null(result.Filtro.Edad);
+
                 Assert.NotNull(result.Filtro.Sexo);
-                Assert.Equal('M', result.Filtro.Sexo);
+                Assert.Equal(sexo, result.Filtro.Sexo);
+
                 Assert.Null(result.Filtro.Fecha);
-
-
             }
 
         }
@@ -233,33 +244,33 @@ namespace CovidInfoUnitTests
         /// <summary>
         /// Se prueba que el metodo GetCasosCovid devuelva los registros correctos al filtrar por fecha
         /// </summary>
-        [Fact]
-        public async void GetCasosCovidPorFecha()
+        [Theory]
+        [ClassData(typeof(FiltrarPorFechaData))]
+        public async void GetCasosCovidPorFecha(int totalExpected, DateTime fecha)
         {
 
             using (var context = GetDbContext())
-            {
-
+            { 
                 var controller = new ReporteCasoController(context);
 
                 Assert.Equal(12, context.CasosCovid.AsEnumerable().Count());
 
-                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(fecha: new DateTime(2020, 03, 17))).Value;
+                var result = (GetCasosCovidOkObjectResult)(await controller.GetCasosCovid(fecha: fecha)).Value;
 
 
                 Assert.NotNull(result);
 
-                Assert.Equal(3, result.Total);
-
-                Assert.Equal(3, result.Registros.Count());
+                Assert.Equal(totalExpected, result.Total);
+                Assert.Equal(totalExpected, result.Registros.Count());
 
                 Assert.Null(result.Filtro.Pais);
                 Assert.Null(result.Filtro.Departamento);
                 Assert.Null(result.Filtro.Municipio);
                 Assert.Null(result.Filtro.Edad);
                 Assert.Null(result.Filtro.Sexo);
+
                 Assert.NotNull(result.Filtro.Fecha);
-                Assert.Equal(new DateTime(2020, 03, 17), result.Filtro.Fecha);
+                Assert.Equal(fecha, result.Filtro.Fecha);
 
             }
 
@@ -285,9 +296,6 @@ namespace CovidInfoUnitTests
 
         }
 
-
     }
-
-    
 
 }
