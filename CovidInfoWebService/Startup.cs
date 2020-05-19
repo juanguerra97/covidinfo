@@ -50,6 +50,8 @@ namespace CovidInfoWebService
 
             app.UseHttpsRedirection();
 
+            app.UseCors(options => options.AllowAnyOrigin());
+
             app.UseRouting();
             
 	    app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
