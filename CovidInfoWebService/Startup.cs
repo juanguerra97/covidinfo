@@ -31,7 +31,13 @@ namespace CovidInfoWebService
             services.AddDbContext<InfoCovidDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
             services.AddControllers();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +49,8 @@ namespace CovidInfoWebService
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseRouting();
             
